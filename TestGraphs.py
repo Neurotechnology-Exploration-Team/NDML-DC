@@ -130,7 +130,7 @@ class DynamicEEGPlotter:
 
 if __name__ == "__main__":
     # Assuming preprocess_and_normalize is defined as shown earlier
-    df = pd.read_csv('./csv_downloads/P001/S002/Blink/trial_00/EEG_data.csv', index_col='Timestamp', parse_dates=True)
+    df = pd.read_csv('./csv_downloads/P001/S023/Blink/trial_00/EEG_data.csv', index_col='Timestamp', parse_dates=True)
     channels = ['EEG_6']  # Specify the channels you're interested in
 
     # Apply preprocessing and normalization

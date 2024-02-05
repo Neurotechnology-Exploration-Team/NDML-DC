@@ -123,7 +123,8 @@ class LSL:
                         # Set timestamp from the first stream and add time correction offset
                         data_row['Timestamp'] = timestamp + stream.time_correction()
 
-                        # Flatten the data row into a single list and append to collected data
+                        # Flatten the data row into a single list and append to collected. This is where it goes from 2d to 1d.
+                        # Does this do anything to timing?  
                         flattened_data_row = [data_row['Timestamp']] + [data_row['Label']] + sample
                         LSL.collected_data[stream_type] += [flattened_data_row]
 
