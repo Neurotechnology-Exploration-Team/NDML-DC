@@ -4,12 +4,12 @@ import pyqtgraph as pg
 from pyqtgraph.Qt import QtWidgets, QtCore
 from scipy.signal import butter, filtfilt
 import sys
-
+from brainflow.data_filter import DataFilter, FilterTypes
 # Assuming your CSV data is saved in 'eeg_data.csv'
 
 
 
-def preprocess_data(df, channels, lowcut=1.0, highcut=50.0, fs=256.0, order=5):
+def preprocess_data(df, channels, lowcut=1.0, highcut=50.0, fs=1, order=5):
     """
     Preprocess EEG data: remove zeros and apply a bandpass filter to specified channels.
 
@@ -24,18 +24,15 @@ def preprocess_data(df, channels, lowcut=1.0, highcut=50.0, fs=256.0, order=5):
     # Copy DataFrame to avoid modifying the original data
     preprocessed_df = df.copy()
 
-    # Bandpass filter design
-    nyq = 0.5 * fs
-    low = lowcut / nyq
-    high = highcut / nyq
-    b, a = butter(order, [low, high], btype='band')
-
     for channel in channels:
         # Replace zeros with NaN to avoid affecting the filter
         preprocessed_df[channel] = preprocessed_df[channel].replace(0, np.nan)
         # Apply the filter only to non-NaN values
         valid_values = ~preprocessed_df[channel].isna()
-        preprocessed_df.loc[valid_values, channel] = filtfilt(b, a, preprocessed_df.loc[valid_values, channel])
+        if valid_values.any():  # Check if there are any non-NaN values to filter
+            data = preprocessed_df.loc[valid_values, channel].to_numpy()
+            DataFilter.perform_bandpass(data, fs, lowcut, highcut, order, FilterTypes.BUTTERWORTH.value, 0)
+            preprocessed_df.loc[valid_values, channel] = data
 
     return preprocessed_df
 
