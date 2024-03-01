@@ -4,12 +4,21 @@ import config
 from LSL import LSL
 from tests.TestGUI import TestGUI
 from tests.TestThread import TestThread
+import time
 
 
 class WarmUpTest(TestThread):
-   
 
-    def __init__(self, name, image_path_1, image_path_2,image_path_3,image_path_4,image_path_5):
+    def __init__(
+        self,
+        name,
+        image_path_1,
+        image_path_2,
+        image_path_3,
+        image_path_4,
+        image_path_5,
+        arrow_file,
+    ):
         """
         Initializes and creates the transition labels in the display window.
 
@@ -35,35 +44,58 @@ class WarmUpTest(TestThread):
         self.firstImage = True
         self.current_image = None
 
+        self.arrow_file = arrow_file
+
     def run_test(self):
-        """
-        Main loop that runs and schedules the next iteration of the test
-        """
-        if self.iteration == config.ITERATIONS_PER_TEST:
-            self.running = False
+        with open(self.arrow_file) as input:
+            token = next(input)
+            if token != None:
+                if token == "Center":
+                    LSL.start_label(self.label_1)
+                    self.current_image = TestGUI.place_image(self.image_1)
+                elif token == "Up":
+                    LSL.start_label(self.label_2)
+                    self.current_image = TestGUI.place_image(self.image_2)
+                elif token == "Down":
+                    LSL.start_label(self.label_3)
+                    self.current_image = TestGUI.place_image(self.image_3)
+                elif token == "Left":
+                    LSL.start_label(self.label_4)
+                    self.current_image = TestGUI.place_image(self.image_4)
+                elif token == "Right":
+                    LSL.start_label(self.label_5)
+                    self.current_image = TestGUI.place_image(self.image_5)
 
-        if self.running:
-            # Display current image and start labeling based on flag
-            if self.firstImage:
-                LSL.start_label(self.label_1)
-                self.current_image = TestGUI.place_image(self.image_1)
-            else:
-                LSL.start_label(self.label_2)
-                self.current_image = TestGUI.place_image(self.image_2)
+                time.sleep(5)
 
-            self.playsound()  # Auditory stimulus
+                # """
+                # Main loop that runs and schedules the next iteration of the test
+                # """
+                # if self.iteration == config.ITERATIONS_PER_TEST:
+                #     self.running = False
 
-            def swap():
-                """
-                Function to swap the images for transition states.
-                """
-                self.firstImage = not self.firstImage
-                self.run_test()
+                # if self.running:
+                #     # Display current image and start labeling based on flag
+                #     if self.firstImage:
+                #         LSL.start_label(self.label_1)
+                #         self.current_image = TestGUI.place_image(self.image_1)
+                #     else:
+                #         LSL.start_label(self.label_2)
+                #         self.current_image = TestGUI.place_image(self.image_2)
 
-            self.test_job_id = TestGUI.display_window.after(config.TRANSITION_DURATION * 1000, swap)
+                #     self.playsound()  # Auditory stimulus
 
-            self.iteration += 1
-        else:
+                #     def swap():
+                #         """
+                #         Function to swap the images for transition states.
+                #         """
+                #         self.firstImage = not self.firstImage
+                #         self.run_test()
+
+                #     self.test_job_id = TestGUI.display_window.after(config.TRANSITION_DURATION * 1000, swap)
+
+                #     self.iteration += 1
+                # else:
             # Stop test thread
             self.running = False
             TestGUI.destroy_current_element()
