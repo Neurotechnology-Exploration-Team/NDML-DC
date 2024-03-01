@@ -6,16 +6,10 @@ from tests.TestGUI import TestGUI
 from tests.TestThread import TestThread
 
 
-class WarmupTest(TestThread):
-    """
-    The Transition test that extends the TestThread class. Uses images and beeps to swap from one state to another.
+class WarmUpTest(TestThread):
+   
 
-    Visual (images) and auditory stimulus
-    """
-
-    def __init__(
-        self, name, image_path_1, image_path_2, image_path_3, image_path_4, image_path_5
-    ):
+    def __init__(self, name, image_path_1, image_path_2,image_path_3,image_path_4,image_path_5):
         """
         Initializes and creates the transition labels in the display window.
 
@@ -66,9 +60,7 @@ class WarmupTest(TestThread):
                 self.firstImage = not self.firstImage
                 self.run_test()
 
-            self.test_job_id = TestGUI.display_window.after(
-                config.TRANSITION_DURATION * 1000, swap
-            )
+            self.test_job_id = TestGUI.display_window.after(config.TRANSITION_DURATION * 1000, swap)
 
             self.iteration += 1
         else:
