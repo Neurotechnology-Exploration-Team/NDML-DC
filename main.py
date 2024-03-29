@@ -22,14 +22,28 @@ class DataCollectorApp:
         # Dynamically import the test from tests package & construct it w/ no parameters
         class_name = f"{test_type}Test"
         test_class = getattr(importlib.import_module(f"tests.{class_name}"), class_name)
-
+        # Possible optimization of test selection, try if seeing input delays
         if test_type == "Transition":
             assets = config.TESTS[test_type][test_name]
-            test = test_class(test_name, os.path.join('.', 'assets', assets[0]), os.path.join('.', 'assets', assets[1]))
+            test = test_class(
+                test_name,
+                os.path.join(".", "assets", assets[0]),
+                os.path.join(".", "assets", assets[1]),
+            )
         elif test_type == "Constant":
             test = test_class(test_name)
         elif test_type == "Blink":
             test = test_class(test_name)
+        elif test_type == "WarmUp":
+            assets = config.TESTS[test_type][test_name]
+            test = test_class(
+                test_name,
+                os.path.join(".", "assets", assets[0]),
+                os.path.join(".", "assets", assets[1]),
+                os.path.join(".", "assets", assets[2]),
+                os.path.join(".", "assets", assets[3]),
+                os.path.join(".", "assets", assets[4]),
+            )
         else:
             # Invalid test type
             raise ValueError(f"Unknown test type: {test_type}")
@@ -50,11 +64,13 @@ class DataCollectorApp:
         for test_type in config.TESTS.keys():
             for test_name in config.TESTS[test_type]:
                 # Add button to test
-                TestGUI.add_test(test_name,
-                                 lambda n=test_name, t=test_type: DataCollectorApp.run_test(n, t))
+                TestGUI.add_test(
+                    test_name,
+                    lambda n=test_name, t=test_type: DataCollectorApp.run_test(n, t),
+                )
 
         TestGUI.control_window.mainloop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     DataCollectorApp.run()

@@ -1,0 +1,11 @@
+Center
+Left
+Right
+Left
+Up
+Down
+Up
+Down
+Left
+Up
+Center

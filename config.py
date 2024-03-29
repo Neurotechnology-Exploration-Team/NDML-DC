@@ -1,24 +1,34 @@
 # LSL configuration
-LSL_RESOLUTION_TIMEOUT = 10.0   # Timeout for connecting an LSL stream (seconds)
-SUPPORTED_STREAMS = {           # Which streams to enable/data to collect
-    'EEG': True,
-    'Accelerometer': False,
-    'FFT': False
+LSL_RESOLUTION_TIMEOUT = 10.0  # Timeout for connecting an LSL stream (seconds)
+SUPPORTED_STREAMS = {  # Which streams to enable/data to collect
+    "EEG": True,
+    "Accelerometer": False,
+    "FFT": False,
 }
 DEFAULT_LABEL = "No Event"
 
 # Test length
-DATA_PADDING_DURATION = 5    # How long to wait before starting and ending a test (default 5 seconds)
-BLINK_MIN_INTERVAL = 2.5     # The minimum duration between intervals (default 2.5 seconds)
-BLINK_MAX_INTERVAL = 6       # The maximum duration between intervals (default 6 seconds)
+DATA_PADDING_DURATION = (
+    5  # How long to wait before starting and ending a test (default 5 seconds)
+)
+BLINK_MIN_INTERVAL = 2.5  # The minimum duration between intervals (default 2.5 seconds)
+BLINK_MAX_INTERVAL = 6  # The maximum duration between intervals (default 6 seconds)
 
-ITERATIONS_PER_TEST = 30           # How many iterations run per action (default 30)
+ITERATIONS_PER_TEST = 30  # How many iterations run per action (default 30)
 ITERATIONS_PER_CONSTANT_TEST = 10  # How many iterations run per constant test (default 5, generally about 5 minutes)
 
-PAUSE_AFTER_TEST = 0.5       # How long to wait after each test iteration (default 0.5 seconds)
-TRANSITION_DURATION = 10     # How long to wait before swapping transition states (default 10 seconds)
-CONSTANT_TEST_DURATION = 20  # How long a constant test iteration should be (default 20 seconds)
-CONSTANT_TEST_BREAK = 5      # How long to break for during constant tests (default 5 seconds)
+PAUSE_AFTER_TEST = (
+    0.5  # How long to wait after each test iteration (default 0.5 seconds)
+)
+TRANSITION_DURATION = (
+    10  # How long to wait before swapping transition states (default 10 seconds)
+)
+CONSTANT_TEST_DURATION = (
+    20  # How long a constant test iteration should be (default 20 seconds)
+)
+CONSTANT_TEST_BREAK = (
+    5  # How long to break for during constant tests (default 5 seconds)
+)
 
 #
 # The main list of all tests corresponding to type and their images.
@@ -31,7 +41,7 @@ TESTS = {
         "Stationary Float to Float Up": ["Stop.png", "Up.png"],
         "Stationary Float to Float Down": ["Stop.png", "Down.png"],
         "Eyes Open to Eyes Closed": ["EyesOpen.png", "EyesClosed.png"],
-        "Brow Furrow to Brow Unfurrow": ["BrowFurrow.png", "BrowUnfurrow.png"]
+        "Brow Furrow to Brow Unfurrow": ["BrowFurrow.png", "BrowUnfurrow.png"],
     },
     "Constant": {  # Images currently not used, only text is used
         "Eyes Open": "EyesOpen.png",
@@ -43,11 +53,16 @@ TESTS = {
         "Float Right": "Right.png",
         "Float Up": "Up.png",
         "Float Down": "Down.png",
-        "Select": "Select.png"
+        "Select": "Select.png",
     },
-    "Blink": [  # No images for blinking tests
-        "Blink"
-    ]
+    "Blink": ["Blink"],  # No images for blinking tests
+    "WarmUp": {
+        "Center": "Center.png",
+        "Up": "Up.png",
+        "Down": "Down.png",
+        "Left": "Left.png",
+        "Right": "Right.png",
+    },
 }
 
 # Subject information
