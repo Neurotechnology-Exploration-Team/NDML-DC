@@ -63,6 +63,14 @@ TESTS = {
         "Left": "Left.png",
         "Right": "Right.png",
     },
+    "Muscle":{ #images for the muscle experiment
+        "Blank": "Blank.jpeg",
+        "LeftArm": "LeftArm.jpeg",
+        "RightArm": "RightArm.jpeg",
+        "LeftLeg": "LeftLeg.jpeg",
+        "RightLeg": "RightLeg.jpeg",
+        "Torso": "Torso.jpeg",
+    },
 }
 
 # Subject information
