@@ -44,6 +44,17 @@ class DataCollectorApp:
                 os.path.join(".", "assets", assets[3]),
                 os.path.join(".", "assets", assets[4]),
             )
+        elif test_type == "Muscle":
+            assets = config.TESTS[test_type][test_name]
+            test = test_class(
+                test_name,
+                os.path.join(".", "assets", assets[0]),
+                os.path.join(".", "assets", assets[1]),
+                os.path.join(".", "assets", assets[2]),
+                os.path.join(".", "assets", assets[3]),
+                os.path.join(".", "assets", assets[4]),
+                os.path.join(".", "assets", assets[5]),
+            )
         else:
             # Invalid test type
             raise ValueError(f"Unknown test type: {test_type}")

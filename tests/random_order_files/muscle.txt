@@ -1,0 +1,10 @@
+Torso
+Left Arm
+Right Arm
+Left Leg
+Left Arm 
+Right Leg
+Torso
+Left Leg 
+Right Arm 
+Right Leg

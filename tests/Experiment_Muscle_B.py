@@ -17,6 +17,7 @@ class MuscleTest(TestThread):
         image_path_4,
         image_path_5,
         image_path_6,
+        muscle_file,
 
     ):
         """
@@ -46,8 +47,10 @@ class MuscleTest(TestThread):
         self.firstImage = True
         self.current_image = None
 
+        self.muscle_file = muscle_file
+
     def run_test(self):
-        with open(self.arrow_file) as input:
+        with open(self.muscle_file) as input:
             token = next(input)
             if token != None:
                 if token == "blank":
