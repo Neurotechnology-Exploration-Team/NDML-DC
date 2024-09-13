@@ -4,4 +4,3 @@ csv_downloads/*
 __pycache__/
 venv/
 .idea/
-tests/WarmupTest.py
