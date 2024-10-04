@@ -40,6 +40,9 @@ class TestThread(threading.Thread):
 
         self._stop_event = threading.Event()  # Setup stop event to auto kill thread
 
+        self.paused = False
+        self.current_label = "TEST"
+
     def run(self):
         """
         All logic related to the control panel, starting collection, and calling the stop method after a certain duration.
@@ -109,3 +112,14 @@ class TestThread(threading.Thread):
         Helper method to play the constant sinusoidal beep sound for auditory stimulus (assets/beep.mp3).
         """
         self.sound.play()
+
+    def pause_resume(self):
+        "Pauses the test if active, else resumes it."
+
+        if self.paused:
+            self.paused = False
+            LSL.start_label(self.current_label)
+
+        else:
+            self.paused = True
+            LSL.stop_label()

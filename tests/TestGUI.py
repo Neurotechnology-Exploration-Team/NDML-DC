@@ -82,6 +82,17 @@ class TestGUI:
         )
         TestGUI.close_button.pack(side="right")
 
+        TestGUI.pause_button = tk.Button(
+            frame, 
+            text ="PAUSE/RESUME TEST",
+            height=4, 
+            width=30,
+            state="disabled",
+            command=lambda: TestGUI.current_thread.pause_resume(),
+        )
+        
+        TestGUI.pause_button.pack(side="right")
+        
         TestGUI.timer_label = tk.Label(
             TestGUI.control_window,
             text="Elapsed Time: 0.00 seconds",
@@ -92,7 +103,6 @@ class TestGUI:
         TestGUI.timer_queue = (
             Queue()
         )  # Initialize a queue for communication between thread
-
         TestGUI._prompt_participant_info()
 
     @staticmethod
