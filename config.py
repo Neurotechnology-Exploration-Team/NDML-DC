@@ -56,13 +56,13 @@ TESTS = {
         "Select": "Select.png",
     },
     "Blink": ["Blink"],  # No images for blinking tests
-    "WarmUp": {
-        "Center": "Center.png",
-        "Up": "Up.png",
-        "Down": "Down.png",
-        "Left": "Left.png",
-        "Right": "Right.png",
-    },
+    "WarmUp": [
+        "Center.png",
+        "Up.png",
+        "Down.png",
+        "Left.png",
+        "Right.png",
+    ],
     "Muscle":{ #images for the muscle experiment
         "Blank": "Blank.jpg",
         "LeftArm": "LeftArm.jpg",

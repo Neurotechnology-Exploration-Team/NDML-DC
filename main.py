@@ -24,7 +24,7 @@ class DataCollectorApp:
         test_class = getattr(importlib.import_module(f"tests.{class_name}"), class_name)
         # Possible optimization of test selection, try if seeing input delays
         if test_type == "Transition":
-            assets = config.TESTS[test_type][test_name]
+            assets = config.TESTS[test_type]
             test = test_class(
                 test_name,
                 os.path.join(".", "assets", assets[0]),
@@ -35,7 +35,7 @@ class DataCollectorApp:
         elif test_type == "Blink":
             test = test_class(test_name)
         elif test_type == "WarmUp":
-            assets = config.TESTS[test_type][test_name]
+            assets = config.TESTS[test_type]
             test = test_class(
                 test_name,
                 os.path.join(".", "assets", assets[0]),
@@ -45,7 +45,7 @@ class DataCollectorApp:
                 os.path.join(".", "assets", assets[4]),
             )
         elif test_type == "Muscle":
-            assets = config.TESTS[test_type][test_name]
+            assets = config.TESTS[test_type]
             test = test_class(
                 test_name,
                 os.path.join(".", "assets", assets[0]),
@@ -76,7 +76,7 @@ class DataCollectorApp:
             # Add button to test
             TestGUI.add_test(
                 test_type,
-                lambda n="Test3", t=test_type: DataCollectorApp.run_test(n, t),
+                lambda n=test_type, t=test_type: DataCollectorApp.run_test(n, t),
             )
 
         TestGUI.control_window.mainloop()
