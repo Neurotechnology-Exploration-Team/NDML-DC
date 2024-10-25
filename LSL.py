@@ -158,7 +158,13 @@ class LSL:
                 # Convert collected data to a DataFrame, format with columns above, and write to CSV
                 df = pd.DataFrame(LSL.collected_data[stream_type], columns=columns)
                 df = df.sort_values(by='Timestamp')
-                df.to_csv(os.path.join(path, f"{stream_type}_data.csv"), index=False)
+                print(df)
+
+                if os.path.exists(os.path.join(path, f"{stream_type}_data.csv")):
+                    os.remove(os.path.join(path, f"{stream_type}_data.csv"))
+
+                with open(os.path.join(path, f"{stream_type}_data.csv"), mode="x") as outfile:
+                    df.to_csv(outfile, index=False)
                 print(f"Collected {stream_type} data saved.")
         else:
             print("No data to save.")

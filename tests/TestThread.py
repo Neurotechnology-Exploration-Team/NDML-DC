@@ -75,6 +75,7 @@ class TestThread(threading.Thread):
         sleep(config.DATA_PADDING_DURATION)  # Wait to collect junk data
 
         LSL.stop_collection(self.current_path)  # Stop collecting
+        
 
         complete = TestGUI.confirm_current_test()
         current_test = TestGUI.current_thread.name
@@ -97,7 +98,7 @@ class TestThread(threading.Thread):
 
         # Cancel currently running timer
         TestGUI.display_window.after_cancel(self.test_job_id)
-        self.test_job_id = None
+        #self.test_job_id = None
 
         self.stop()
 
