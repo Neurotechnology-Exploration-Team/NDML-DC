@@ -7,7 +7,7 @@ from tests.TestThread import TestThread
 import time
 
 
-class WarmUpTest(TestThread):
+class ColorTest(TestThread):
 
     def __init__(
         self,

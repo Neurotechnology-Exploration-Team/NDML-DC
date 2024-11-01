@@ -74,7 +74,7 @@ class TestThread(threading.Thread):
         LSL.stop_label()  # Stop labelling
         sleep(config.DATA_PADDING_DURATION)  # Wait to collect junk data
 
-        LSL.stop_collection(self.current_path)  # Stop collecting
+        LSL.stop_collection(self.current_path, self.name)  # Stop collecting
         
 
         complete = TestGUI.confirm_current_test()
@@ -101,7 +101,6 @@ class TestThread(threading.Thread):
         #self.test_job_id = None
 
         self.stop()
-
     def stopped(self):
         """
         Overrides default stop method, as soon as stop event is set in stop() the test will auto kill itself.

@@ -56,13 +56,14 @@ TESTS = {
         "Select": "Select.png",
     },
     "Blink": ["Blink"],  # No images for blinking tests
-    "WarmUp": [
-        "Center.png",
-        "Up.png",
-        "Down.png",
-        "Left.png",
-        "Right.png",
-    ],
+    "WarmUp": {
+        "Center":"Center.png",
+        "Up": "Up.png",
+        "Down": "Down.png",
+        "Left": "Left.png",
+        "Right":"Right.png",
+        "ArrowFile": "arrows.txt",
+    },
     "Muscle":{ #images for the muscle experiment
         "Blank": "Blank.jpg",
         "LeftArm": "LeftArm.jpg",
@@ -71,6 +72,11 @@ TESTS = {
         "RightLeg": "RightLeg.jpg",
         "Torso": "Torso.jpg",
     },
+    "Color": ["Color"],
+    "Hearing": ["Hearing"],
+    "Touch": ["Touch"],
+    "Smell": ["Smell"],
+    "Speech": ["Speech"],
 }
 
 # Subject information

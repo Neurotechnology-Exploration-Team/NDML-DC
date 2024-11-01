@@ -17,7 +17,7 @@ class WarmUpTest(TestThread):
         image_path_3,
         image_path_4,
         image_path_5,
-        arrow_file,
+        arrow_file=None,
     ):
         """
         Initializes and creates the transition labels in the display window.

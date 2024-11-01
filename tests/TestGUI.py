@@ -106,26 +106,26 @@ class TestGUI:
         TestGUI._prompt_participant_info()
 
     @staticmethod
-    def add_test(test_name: str, test_lambda):
+    def add_test(current_test: str, test_lambda):
         """
         Adds a button to the test window with its name and function to run.
 
-        :param test_name: The name of the test that the button will be assigned to.
+        :param current_test: The name of the test that the button will be assigned to.
         :param test_lambda: The function that the test will be ran with (no arguments).
         """
         # Configure button
-        btn = tk.Button(TestGUI.control_window, text=test_name)
+        btn = tk.Button(TestGUI.control_window, text=current_test)
         btn.config(command=test_lambda, bg="red")
         btn.pack()
 
         # Configure test state
-        TestGUI.tests[test_name] = {
+        TestGUI.tests[current_test] = {
             "lambda": test_lambda,
             "button": btn,
             "trial": 0,
             "completed": False,
         }
-        print("Added test: " + test_name)
+        print("Added test: " + current_test)
 
     @staticmethod
     def confirm_current_test() -> bool:
@@ -308,7 +308,7 @@ class TestGUI:
             print("Data denied.")
         TestGUI.tests[TestGUI.current_thread.name]["completed"] = confirmed
         popup.destroy()
-        for test_name, test_info in TestGUI.tests.items():
+        for current_test, test_info in TestGUI.tests.items():
             if not test_info["completed"]:
                 test_info["button"].config(state="normal", bg="red")
             else:

@@ -2,7 +2,6 @@ import os.path
 import threading
 import pandas as pd
 import pylsl
-
 import config
 
 
@@ -64,7 +63,7 @@ class LSL:
         LSL.collection_thread.start()
 
     @staticmethod
-    def stop_collection(path: str):
+    def stop_collection(path: str, current_test: str):
         """
         Function to stop data collection and save to CSV.
 
@@ -74,7 +73,7 @@ class LSL:
             LSL.collecting = False
             LSL.collection_thread.join()
             print("Data collection stopped. Saving collected data.")
-            LSL._save_collected_data(path)
+            LSL._save_collected_data(path, current_test)
 
     @staticmethod
     def start_label(event: str):
@@ -142,29 +141,39 @@ class LSL:
                         LSL.collected_data[stream_type] += [flattened_data_row]
 
     @staticmethod
-    def _save_collected_data(path: str):
+    def _save_collected_data(path: str, current_test: str):
         """
         Function to save data collected after collection has been stopped.
 
         :param path: Path to the FOLDER that the data should be saved to
         """
         if LSL.collected_data:
+            # Create a single DataFrame to hold all the collected data
+            all_data = pd.DataFrame()
+
             for stream_type in LSL.streams.keys():
                 channel_count = LSL.streams[stream_type].info().channel_count() if LSL.streams[stream_type] else 0
 
                 # Define column headers
                 columns = ['Timestamp'] + ['Label'] + [f'{stream_type}_{i + 1}' for i in range(channel_count)]
 
-                # Convert collected data to a DataFrame, format with columns above, and write to CSV
+                # Convert collected data to a DataFrame, format with columns above
                 df = pd.DataFrame(LSL.collected_data[stream_type], columns=columns)
                 df = df.sort_values(by='Timestamp')
-                print(df)
 
-                if os.path.exists(os.path.join(path, f"{stream_type}_data.csv")):
-                    os.remove(os.path.join(path, f"{stream_type}_data.csv"))
+                # Add the stream type to the DataFrame
+                df['Stream Type'] = stream_type
 
-                with open(os.path.join(path, f"{stream_type}_data.csv"), mode="x") as outfile:
-                    df.to_csv(outfile, index=False)
-                print(f"Collected {stream_type} data saved.")
+                # Append the DataFrame to the all_data DataFrame
+                all_data = pd.concat([all_data, df])
+
+            # Save the all_data DataFrame to a CSV file
+            filename = f"{current_test}_test_data.csv"
+            if os.path.exists(os.path.join(path, filename)):
+                os.remove(os.path.join(path, filename))
+
+            with open(os.path.join(path, filename), mode="x") as outfile:
+                all_data.to_csv(outfile, index=False)
+            print(f"Collected data saved to {filename}.")
         else:
             print("No data to save.")

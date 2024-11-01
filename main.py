@@ -13,10 +13,10 @@ class DataCollectorApp:
     """
 
     @staticmethod
-    def run_test(test_name: str, test_type: str) -> TestThread:
+    def run_test(current_test: str, test_type: str) -> TestThread:
         """
         Runs the specified test in a separate thread and collects data.
-        :param test_name: Name of the test being run
+        :param current_test: Name of the test being run
         :param test_type: Type of the test being run: Blink, Constant, or Transition
         """
         # Dynamically import the test from tests package & construct it w/ no parameters
@@ -26,34 +26,58 @@ class DataCollectorApp:
         if test_type == "Transition":
             assets = config.TESTS[test_type]
             test = test_class(
-                test_name,
+                current_test,
                 os.path.join(".", "assets", assets[0]),
                 os.path.join(".", "assets", assets[1]),
             )
         elif test_type == "Constant":
-            test = test_class(test_name)
+            test = test_class(current_test)
         elif test_type == "Blink":
-            test = test_class(test_name)
+            test = test_class(current_test)
         elif test_type == "WarmUp":
             assets = config.TESTS[test_type]
             test = test_class(
-                test_name,
+                current_test,
+                os.path.join(".", "assets", assets["Center"] ),
+                os.path.join(".", "assets", assets["Up"]),
+                os.path.join(".", "assets", assets["Down"]),
+                os.path.join(".", "assets", assets["Left"]),
+                os.path.join(".", "assets", assets["Right"]),
+                os.path.join(".", "tests", "random_order_files", assets["ArrowFile"]),
+            )
+        elif test_type == "Muscle":
+            assets = config.TESTS[test_type]
+            test = test_class(
+                current_test,
+                os.path.join(".", "assets", ["Blank"][0]),
+                os.path.join(".", "assets", ["left arm"][0]),
+                os.path.join(".", "assets", ["right arm"][0]),
+                os.path.join(".", "assets", ["right leg"][0]),
+                os.path.join(".", "assets", ["left leg"][0]),
+                os.path.join(".", "assets", ["torso"][0]),
+            )
+        elif test_type == "Color":
+            assets = config.TESTS[test_type]
+            test = test_class(
+                current_test,
                 os.path.join(".", "assets", assets[0]),
                 os.path.join(".", "assets", assets[1]),
                 os.path.join(".", "assets", assets[2]),
                 os.path.join(".", "assets", assets[3]),
                 os.path.join(".", "assets", assets[4]),
             )
-        elif test_type == "Muscle":
+        elif test_type == "Hearing":
+            assets = config.TESTS[test_type]
+            test = test_class(current_test)
+        elif test_type == "Touch":
+            test = test_class(current_test)
+        elif test_type == "Smell":
+            test = test_class(current_test)
+        elif test_type == "Speech":
             assets = config.TESTS[test_type]
             test = test_class(
-                test_name,
+                current_test,
                 os.path.join(".", "assets", assets[0]),
-                os.path.join(".", "assets", assets[1]),
-                os.path.join(".", "assets", assets[2]),
-                os.path.join(".", "assets", assets[3]),
-                os.path.join(".", "assets", assets[4]),
-                os.path.join(".", "assets", assets[5]),
             )
         else:
             # Invalid test type

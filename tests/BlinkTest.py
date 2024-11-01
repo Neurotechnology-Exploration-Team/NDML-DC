@@ -1,6 +1,6 @@
 import random
 from time import sleep
-
+import os 
 import config
 from LSL import LSL
 from tests.TestGUI import TestGUI
@@ -16,7 +16,9 @@ class BlinkTest(TestThread):
 
     def __init__(self, name):
         super().__init__(name)
-
+        test_path = os.path.join(config.SAVED_DATA_PATH, TestGUI.participant_ID, TestGUI.session_ID, self.name)
+        self.current_path = os.path.join(str(test_path), f"trial_{str(self.trial_number).zfill(2)}")
+        os.makedirs(self.current_path, exist_ok=True)
     def run_test(self):
         """
         Main loop that runs and schedules the next iteration of the test
