@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import os 
 import config
 from LSL import LSL
 from tests.TestGUI import TestGUI
@@ -27,6 +27,9 @@ class WarmUpTest(TestThread):
         :param image_path_2: The path to the image of state 2
         """
         super().__init__(name)
+        test_path = os.path.join(config.SAVED_DATA_PATH, TestGUI.participant_ID, TestGUI.session_ID, self.name)
+        self.current_path = os.path.join(str(test_path), f"trial_{str(self.trial_number).zfill(2)}")
+        os.makedirs(self.current_path, exist_ok=True)
 
         self.image_1 = tk.PhotoImage(file=image_path_1)
         self.image_2 = tk.PhotoImage(file=image_path_2)
@@ -48,55 +51,34 @@ class WarmUpTest(TestThread):
 
     def run_test(self):
         with open(self.arrow_file) as input:
-            token = next(input)
-            if token != None:
-                if token == "Center":
-                    LSL.start_label(self.label_1)
-                    self.current_image = TestGUI.place_image(self.image_1)
-                elif token == "Up":
-                    LSL.start_label(self.label_2)
-                    self.current_image = TestGUI.place_image(self.image_2)
-                elif token == "Down":
-                    LSL.start_label(self.label_3)
-                    self.current_image = TestGUI.place_image(self.image_3)
-                elif token == "Left":
-                    LSL.start_label(self.label_4)
-                    self.current_image = TestGUI.place_image(self.image_4)
-                elif token == "Right":
-                    LSL.start_label(self.label_5)
-                    self.current_image = TestGUI.place_image(self.image_5)
-
-                time.sleep(5)
-
-                # """
-                # Main loop that runs and schedules the next iteration of the test
-                # """
-                # if self.iteration == config.ITERATIONS_PER_TEST:
-                #     self.running = False
-
-                # if self.running:
-                #     # Display current image and start labeling based on flag
-                #     if self.firstImage:
-                #         LSL.start_label(self.label_1)
-                #         self.current_image = TestGUI.place_image(self.image_1)
-                #     else:
-                #         LSL.start_label(self.label_2)
-                #         self.current_image = TestGUI.place_image(self.image_2)
-
-                #     self.playsound()  # Auditory stimulus
-
-                #     def swap():
-                #         """
-                #         Function to swap the images for transition states.
-                #         """
-                #         self.firstImage = not self.firstImage
-                #         self.run_test()
-
-                #     self.test_job_id = TestGUI.display_window.after(config.TRANSITION_DURATION * 1000, swap)
-
-                #     self.iteration += 1
-                # else:
-            # Stop test thread
+            while True:
+                try:
+                    token = next(input)
+                    token = token.strip()
+                    print(token)
+                    print(type(token))
+                    if token != None:
+                        if token == "Center":
+                            LSL.start_label(self.label_1)
+                            self.current_image = TestGUI.place_image(self.image_1)
+                        elif token == "Up":
+                            LSL.start_label(self.label_2)
+                            self.current_image = TestGUI.place_image(self.image_2)
+                        elif token == "Down":
+                            LSL.start_label(self.label_3)
+                            self.current_image = TestGUI.place_image(self.image_3)
+                        elif token == "Left":
+                            LSL.start_label(self.label_4)
+                            self.current_image = TestGUI.place_image(self.image_4)
+                        elif token == "Right":
+                            LSL.start_label(self.label_5)
+                            self.current_image = TestGUI.place_image(self.image_5)
+            
+                        time.sleep(5)
+                    else: 
+                        break
+                except StopIteration:
+                    break
             self.running = False
             TestGUI.destroy_current_element()
 
