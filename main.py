@@ -49,12 +49,12 @@ class DataCollectorApp:
             assets = config.TESTS[test_type]
             test = test_class(
                 current_test,
-                os.path.join(".", "assets", ["Blank"][0]),
-                os.path.join(".", "assets", ["left arm"][0]),
-                os.path.join(".", "assets", ["right arm"][0]),
-                os.path.join(".", "assets", ["right leg"][0]),
-                os.path.join(".", "assets", ["left leg"][0]),
-                os.path.join(".", "assets", ["torso"][0]),
+                os.path.join(".", "assets", assets["Blank"]),
+                os.path.join(".", "assets", assets["right arm"]),
+                os.path.join(".", "assets", assets["left arm"]),
+                os.path.join(".", "assets", assets["right leg"]),
+                os.path.join(".", "assets", assets["left leg"]),
+                os.path.join(".", "assets", assets["torso"]),
             )
         elif test_type == "Color":
             assets = config.TESTS[test_type]

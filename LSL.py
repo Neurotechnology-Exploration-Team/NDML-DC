@@ -152,6 +152,7 @@ class LSL:
             all_data = pd.DataFrame()
 
             for stream_type in LSL.streams.keys():
+                print(stream_type)
                 channel_count = LSL.streams[stream_type].info().channel_count() if LSL.streams[stream_type] else 0
 
                 # Define column headers
@@ -160,6 +161,7 @@ class LSL:
                 # Convert collected data to a DataFrame, format with columns above
                 df = pd.DataFrame(LSL.collected_data[stream_type], columns=columns)
                 df = df.sort_values(by='Timestamp')
+                #print(df.head(10))
 
                 # Add the stream type to the DataFrame
                 df['Stream Type'] = stream_type
@@ -173,7 +175,7 @@ class LSL:
                 os.remove(os.path.join(path, filename))
 
             with open(os.path.join(path, filename), mode="x") as outfile:
-                all_data.to_csv(outfile, index=False)
+               df.to_csv(outfile, index=False, lineterminator="\n")
             print(f"Collected data saved to {filename}.")
         else:
             print("No data to save.")
