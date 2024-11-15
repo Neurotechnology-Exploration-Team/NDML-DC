@@ -132,11 +132,11 @@ def process_and_analyze_lsl_eeg(raw):
     
     # Calculate band power over time
     bands = {
-        'Delta': (0, 4),
-        'Theta': (4, 8),
+        'Delta': (2, 4),
+        'Theta': (4, 7),
         'Alpha': (8, 12),
-        'Beta': (12, 30),
-        'Gamma': (30, 40)
+        'Beta': (16, 25),
+        'Gamma': (30, 50)
     }
     
     # Plot band power over time
